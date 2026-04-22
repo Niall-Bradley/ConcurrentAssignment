@@ -1,4 +1,9 @@
-// Import required classes for networking and input/output
+// TCP Client-Server coursework
+// The client sends integers from an ArrayList to the server one at a time.
+// The server calculates a running sum and sends the updated result back.
+// The client displays each returned value and finally sends exit.
+
+// Imports
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,14 +19,14 @@ public class Server {
     public static void main(String[] args) {
 
         // Display message when server starts
-        System.out.println("Server is starting...");
-        System.out.println("Waiting for client connection on port " + PORT + "...");
+        System.out.println("Server starting");
+        System.out.println("Waiting for client connection on port " + PORT );
 
         try (
             // Create a ServerSocket to listen for client connections
             ServerSocket serverSocket = new ServerSocket(PORT);
 
-            // Accept a client connection (program waits here until a client connects)
+            // Accept a client connection (will wait here until a client connects)
             Socket socket = serverSocket.accept();
 
             // Input stream to receive data from client
@@ -33,7 +38,7 @@ public class Server {
         ) {
 
             // Confirm client connection
-            System.out.println("Client connected: " + socket.getInetAddress());
+            System.out.println("Client connected, address: " + socket.getInetAddress());
 
             int sum = 0; // Variable to store running sum
             String message; // Variable to store incoming messages
@@ -64,14 +69,14 @@ public class Server {
                     out.println(sum);
 
                 } catch (NumberFormatException e) {
-                    // Handle invalid (non-integer) input
+                    // Handle invalid input
                     out.println("Invalid input");
                     System.out.println("Invalid number received: " + message);
                 }
             }
 
         } catch (IOException e) {
-            // Handle any server-side errors
+            // Handle any unexpected errors
             System.out.println("Server error: " + e.getMessage());
             e.printStackTrace();
         }
